@@ -2,12 +2,27 @@
 <html lang="ja">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Leaflet Map Sample</title>
-    <script charset="utf-8" src="https://static.line-scdn.net/liff/edge/2/sdk.js"></script>
+    <title>LIFF Profile Example</title>
+    <script src="https://static.line-scdn.net/liff/edge/versions/2.1.0/sdk.js"></script>
 </head>
 <body>
-    <h1>Hello</h1>
+    <h1>プロフィール情報</h1>
     <div id="profile"></div>
+    <script>
+        // LIFF初期化
+        liff.init({ liffId: "2006463532-QGAMO5VJ" }).then(() => {
+            // LIFFが正常に初期化されたら、プロフィール情報を取得
+            return liff.getProfile();
+        }).then(profile => {
+            // プロフィール情報を表示
+            document.getElementById('profile').innerHTML = `
+                <p>名前: ${profile.displayName}</p>
+                <img src="${profile.pictureUrl}" alt="プロフィール画像">
+                <p>ユーザーID: ${profile.userId}</p>
+            `;
+        }).catch(err => {
+            console.error('Error getting profile:', err);
+        });
+    </script>
 </body>
 </html>
